@@ -1,5 +1,6 @@
 import FormControl from "@mui/material/FormControl"
 import FormHelperText from "@mui/material/FormHelperText"
+import { InputField } from "../components/InputField"
 
 export function RegisterPage() {
   const handleSubmit = (event: React.FormEvent) => {
@@ -17,36 +18,29 @@ export function RegisterPage() {
         sx={{ padding: 4, borderRadius: 2 }}
       >
         <h1 className="text-center text-white text-xl">Únete a la grupeta</h1>
-        <label
-          htmlFor="email"
-          className="text-white border-[var(--foreground)]"
-        >
-          Tu email:
-        </label>
-        <input type="text" id="email" className="bg-white rounded-lg" />
-        <label htmlFor="name" className="text-white border-[var(--foreground)]">
-          Tu nombre:
-        </label>
-        <input type="text" id="email" className="bg-white rounded-lg" />
-        <label
-          htmlFor="password"
-          className="text-white border-[var(--foreground)]"
-        >
-          Tu contraseña:
-        </label>
-        <input type="password" id="password" className="bg-white rounded-lg" />
 
-        <label
-          htmlFor="confirm-password"
-          className="text-white border-[var(--foreground)]"
-        >
-          Confirmar contraseña:
-        </label>
-        <input
-          type="password"
-          id="confirm-password"
-          className="bg-white rounded-lg"
+        <InputField
+          id="email"
+          label="Email"
+          type="email"
+          placeholder="ejemplo@gmail.com"
         />
+
+        <InputField
+          id="name"
+          label="Nombre"
+          type="text"
+          placeholder="Juan Pérez"
+        />
+
+        <InputField id="password" label="Contraseña" type="password" />
+
+        <InputField
+          id="confirm-password"
+          label="Confirmar Contraseña"
+          type="password"
+        />
+
         <FormHelperText sx={{ color: "white" }} id="my-helper-text">
           Nunca compartiremos tu email con nadie más.
         </FormHelperText>
