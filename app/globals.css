@@ -6,12 +6,12 @@
   --foreground: #171717;
 
   /* primarios */
-  --primary: #69fff1;
-  --primary-hover: #3de3d0;
+  --primary: #63d471;
+  --primary-hover: #4bb95d;
 
   /* secundarios */
-  --secondary: #63d471;
-  --secondary-hover: #4bb95d;
+  --secondary: #69fff1;
+  --secondary-hover: #3de3d0;
 
   /* oscuros */
   --surface-dark: #233329;
