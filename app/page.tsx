@@ -1,7 +1,7 @@
 "use client"
 
-import { RegisterPage } from "./register/page"
+import { HomePage } from "./home/page" // 👈 cambia el nombre a PascalCase (buena práctica)
 
 export default function Home() {
-  return <RegisterPage />
+  return <HomePage />
 }
