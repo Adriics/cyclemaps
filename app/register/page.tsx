@@ -11,8 +11,9 @@ export default function RegisterPage() {
   const router = useRouter()
 
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setErrror] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<boolean>(false)
+
   const [formData, setFormData] = useState({
     email: "",
     name: "",
@@ -53,19 +54,19 @@ export default function RegisterPage() {
         try {
           const errorData = await response.json()
 
-          setErrror(errorData.message || "Invalid data provided")
+          setError(errorData.message || "Invalid data provided")
         } catch (error) {
-          setErrror("Invalid data provided")
+          setError("Invalid data provided")
           console.log("Error details:", error)
         }
         setIsLoading(false)
       } else {
-        setErrror("An unexpected error occurred")
+        setError("An unexpected error occurred")
         setIsLoading(false)
         console.log("Unexpected response status:", response.status)
       }
     } catch (error) {
-      setErrror("Failed to connect to the server")
+      setError("Failed to connect to the server")
       console.log("Connection error:", error)
     }
     alert("Registro exitoso")
