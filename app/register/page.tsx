@@ -24,20 +24,17 @@ export default function RegisterPage() {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
     setIsLoading(true)
+    setError(null)
 
     try {
       const response = await HttpClient(
-        "http://localhost:5004/cyclemaps/v1/auth/register",
+        "http://localhost:3000/v1/cyclemaps/auth/register",
         "POST",
-        JSON.stringify({
-          email: formData.email,
-          name: formData.name,
-          password: formData.password,
-          confirmPassword: formData.confirmPassword,
-        })
+        JSON.stringify(formData)
       )
 
-      if (response.status === 201) {
+      if (response.ok && response.status === 201) {
+        const data = await response.json()
         setSuccess(true)
         setFormData({
           name: "",
@@ -46,31 +43,18 @@ export default function RegisterPage() {
           confirmPassword: "",
         })
 
-        setTimeout(() => {
-          setIsLoading(false)
-          router.push("/home")
-        }, 1300)
-      } else if (response.status === 400) {
-        try {
-          const errorData = await response.json()
-
-          setError(errorData.message || "Invalid data provided")
-        } catch (error) {
-          setError("Invalid data provided")
-          console.log("Error details:", error)
-        }
-        setIsLoading(false)
+        alert("Registro exitoso")
+        router.push("/home")
       } else {
-        setError("An unexpected error occurred")
-        setIsLoading(false)
-        console.log("Unexpected response status:", response.status)
+        const errorData = await response.json().catch(() => ({}))
+        setError(errorData.message || "Ocurrió un error inesperado")
       }
     } catch (error) {
-      setError("Failed to connect to the server")
-      console.log("Connection error:", error)
+      console.error("Error al enviar registro:", error)
+      setError("No se pudo conectar con el servidor")
+    } finally {
+      setIsLoading(false)
     }
-    alert("Registro exitoso")
-    router.push("/home")
   }
 
   return (
@@ -91,6 +75,8 @@ export default function RegisterPage() {
           label="Email"
           type="email"
           placeholder="ejemplo@gmail.com"
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
         />
 
         <InputField
@@ -98,14 +84,28 @@ export default function RegisterPage() {
           label="Nombre"
           type="text"
           placeholder="Juan Pérez"
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
         />
 
-        <InputField id="password" label="Contraseña" type="password" />
+        <InputField
+          id="password"
+          label="Contraseña"
+          type="password"
+          value={formData.password}
+          onChange={(e) =>
+            setFormData({ ...formData, password: e.target.value })
+          }
+        />
 
         <InputField
           id="confirm-password"
           label="Confirmar Contraseña"
           type="password"
+          value={formData.confirmPassword}
+          onChange={(e) =>
+            setFormData({ ...formData, confirmPassword: e.target.value })
+          }
         />
 
         <FormHelperText sx={{ color: "white" }} id="my-helper-text">

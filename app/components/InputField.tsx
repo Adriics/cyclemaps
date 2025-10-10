@@ -2,6 +2,8 @@ interface InputFieldProps {
   id: string
   label: string
   type: string
+  value?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   placeholder?: string
 }
 
@@ -16,6 +18,8 @@ export function InputField(props: InputFieldProps) {
         {props.label}
       </label>
       <input
+        value={props.value}
+        onChange={props.onChange}
         id={props.id}
         type={props.type}
         placeholder={props.placeholder}
