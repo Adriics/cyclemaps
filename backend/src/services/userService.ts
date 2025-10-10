@@ -14,4 +14,15 @@ export class UserService {
     if (error) throw new Error(error.message)
     return data
   }
+
+  async login(email: string, password: string) {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+
+    if (error) throw new Error(error.message)
+
+    return data
+  }
 }
