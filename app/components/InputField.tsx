@@ -3,6 +3,8 @@ interface InputFieldProps {
   label: string
   type: string
   placeholder?: string
+  value: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export function InputField(props: InputFieldProps) {
@@ -19,8 +21,10 @@ export function InputField(props: InputFieldProps) {
         id={props.id}
         type={props.type}
         placeholder={props.placeholder}
-        className="rounded-md text-[15px] md:text-[17px] p-2 border border-white text-white"
-      ></input>
+        value={props.value}
+        onChange={props.onChange}
+        className="rounded-md text-[15px] md:text-[17px] p-2 border border-white text-white bg-transparent"
+      />
     </>
   )
 }

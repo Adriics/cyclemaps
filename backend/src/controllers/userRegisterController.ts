@@ -6,7 +6,7 @@ export class UserRegisterController {
 
   async run(req: Request, res: Response) {
     try {
-      const { id, name, email, password, confirmPassword } = req.body
+      const { name, email, password, confirmPassword } = req.body
 
       if (!name || !email || !password || !confirmPassword) {
         return res.status(400).json({ message: "All fields are required" })
@@ -17,7 +17,8 @@ export class UserRegisterController {
       }
 
       try {
-        const user = await this.userService.create(id, name, email, password)
+        // El id se generará automáticamente en la base de datos
+        const user = await this.userService.create(name, email, password)
 
         res.status(201).json({ ok: true, user })
       } catch (error) {

@@ -11,14 +11,16 @@ export class UserService {
     return hash
   }
 
-  async create(id: string, name: string, email: string, password: string) {
-    const exists = await this.userHelper.findById(id)
+  async create(name: string, email: string, password: string) {
+    // Buscar por email en lugar de id
+    const exists = await this.userHelper.findByEmail(email)
 
     if (exists) throw new Error("User already exists")
 
-    const hash = this.hashPassword(password)
+    const hash = await this.hashPassword(password)
 
-    const user = new User(id, name, email, hash, new Date(), new Date())
+    // No pasamos id, dejamos que TypeORM lo genere
+    const user = new User(name, email, hash)
 
     const newUser = await this.userHelper.create(user)
 

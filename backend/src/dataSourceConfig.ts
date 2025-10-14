@@ -10,7 +10,8 @@ const dataSource = new DataSource({
   synchronize: false,
   logging: true,
   entities: [__dirname + "/**/*.schema.{ts,js}"],
-  migrations: ["persistence/*.js"],
+  migrations: ["src/persistence/**/*.ts"],
+
   type: "postgres",
 } as DataSourceOptions)
 

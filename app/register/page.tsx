@@ -21,13 +21,22 @@ export default function RegisterPage() {
     confirmPassword: "",
   })
 
+  // Función para actualizar el estado cuando el usuario escribe
+  const handleInputChange = (field: string, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }))
+  }
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
     setIsLoading(true)
+    setError(null)
 
     try {
       const response = await HttpClient(
-        "http://localhost:5004/cyclemaps/v1/auth/register",
+        "http://localhost:5004/v1/cyclemaps/auth/register",
         "POST",
         JSON.stringify({
           email: formData.email,
@@ -46,6 +55,8 @@ export default function RegisterPage() {
           confirmPassword: "",
         })
 
+        alert("Registro exitoso")
+
         setTimeout(() => {
           setIsLoading(false)
           router.push("/home")
@@ -53,7 +64,6 @@ export default function RegisterPage() {
       } else if (response.status === 400) {
         try {
           const errorData = await response.json()
-
           setError(errorData.message || "Invalid data provided")
         } catch (error) {
           setError("Invalid data provided")
@@ -67,10 +77,9 @@ export default function RegisterPage() {
       }
     } catch (error) {
       setError("Failed to connect to the server")
+      setIsLoading(false)
       console.log("Connection error:", error)
     }
-    alert("Registro exitoso")
-    router.push("/home")
   }
 
   return (
@@ -86,11 +95,17 @@ export default function RegisterPage() {
           Únete a la grupeta
         </h1>
 
+        {error && (
+          <div className="bg-red-500 text-white p-2 rounded">{error}</div>
+        )}
+
         <InputField
           id="email"
           label="Email"
           type="email"
           placeholder="ejemplo@gmail.com"
+          value={formData.email}
+          onChange={(e) => handleInputChange("email", e.target.value)}
         />
 
         <InputField
@@ -98,14 +113,24 @@ export default function RegisterPage() {
           label="Nombre"
           type="text"
           placeholder="Juan Pérez"
+          value={formData.name}
+          onChange={(e) => handleInputChange("name", e.target.value)}
         />
 
-        <InputField id="password" label="Contraseña" type="password" />
+        <InputField
+          id="password"
+          label="Contraseña"
+          type="password"
+          value={formData.password}
+          onChange={(e) => handleInputChange("password", e.target.value)}
+        />
 
         <InputField
           id="confirm-password"
           label="Confirmar Contraseña"
           type="password"
+          value={formData.confirmPassword}
+          onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
         />
 
         <FormHelperText sx={{ color: "white" }} id="my-helper-text">
@@ -113,12 +138,16 @@ export default function RegisterPage() {
         </FormHelperText>
 
         <div className="flex flex-col items-center gap-4 mt-4">
-          <button className="cursor-pointer bg-[var(--primary)] text-[15px] md:text-[17px] w-20 h-8 rounded-sm">
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="cursor-pointer bg-[var(--primary)] text-[15px] md:text-[17px] w-20 h-8 rounded-sm disabled:opacity-50"
+          >
             {isLoading ? "Cargando..." : "Me uno!"}
           </button>
 
           <span className="text-white text-[15px] md:text-[17px]">
-            ¿Ya estàs en la grupeta?
+            ¿Ya estás en la grupeta?
           </span>
 
           <p className="text-white text-[15px] md:text-[17px]">

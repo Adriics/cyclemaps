@@ -9,5 +9,5 @@ export function userRegister(router: Router): void {
   const controller = new UserRegisterController(service)
   controller.run = controller.run.bind(controller)
 
-  router.post("/users/register", controller.run)
+  router.post("/auth/register", controller.run)
 }
