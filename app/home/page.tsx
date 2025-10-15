@@ -1,8 +1,8 @@
 "use client"
 
 import Image from "next/image"
-import { Button } from "../components/Button"
 import { useRouter } from "next/navigation"
+import { Button } from "../components/Button"
 
 export default function HomePage() {
   const router = useRouter()
@@ -20,7 +20,7 @@ export default function HomePage() {
         sitio. Eliges el tipo de actividad y a rodar.
       </span>
       <Button text="Registrarse" onClick={() => handleClick("/register")} />
-      <Image src="/maps-hero.png" alt="Maps image" width={900} height={20} />
+      <Image src="/maps-hero.png" alt="Maps image" width={1100} height={20} />
       <Button text="Explorar" onClick={() => handleClick("/explore")} />
     </main>
   )
