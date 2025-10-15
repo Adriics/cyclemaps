@@ -5,15 +5,70 @@ import { InputField } from "../components/InputField"
 import React from "react"
 import FormHelperText from "@mui/material/FormHelperText"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { HttpClient } from "../libs/HttpClient"
 
-export function LoginPage() {
+export default function LoginPage() {
   const router = useRouter()
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState<boolean>(false)
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  })
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }))
+  }
+
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
-    console.log("Login enviado")
-    alert("Login exitoso")
-    router.push("/home")
+    setIsLoading(true)
+    setError(null)
+    try {
+      const response = await HttpClient(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+        "POST",
+        JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        })
+      )
+
+      if (response.status === 200) {
+        setSuccess(true)
+
+        setFormData({
+          email: "",
+          password: "",
+        })
+
+        router.push("/home")
+      } else if (response.status === 400) {
+        try {
+          const errorData = await response.json()
+          setError(errorData.message || "Invalid data provided")
+        } catch (error) {
+          setError("Invalid data provided")
+          console.log("Error details: ", error)
+          setIsLoading(false)
+        }
+      } else {
+        setError("An unexpected error ocurred")
+        setIsLoading(false)
+        console.log("Unexpected response status:", response.status)
+      }
+    } catch (error) {
+      setError("Failed to connect to the server")
+      setIsLoading(false)
+      console.log("Connection error: ", error)
+    }
   }
 
   return (
@@ -32,21 +87,16 @@ export function LoginPage() {
           label="Email"
           type="email"
           placeholder="ejemplo@gmail.com"
+          onChange={(e) => handleInputChange("email", e.target.value)}
+          value={formData.email}
         />
 
         <InputField
-          id="name"
-          label="Nombre"
-          type="text"
-          placeholder="Juan Pérez"
-        />
-
-        <InputField id="password" label="Contraseña" type="password" />
-
-        <InputField
-          id="confirm-password"
-          label="Confirmar Contraseña"
+          id="password"
+          label="Contraseña"
           type="password"
+          onChange={(e) => handleInputChange("password", e.target.value)}
+          value={formData.password}
         />
 
         <FormHelperText sx={{ color: "white" }} id="my-helper-text">

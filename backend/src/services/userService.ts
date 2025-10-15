@@ -1,6 +1,8 @@
 import { createHmac } from "crypto"
 import { UserHelper } from "../helpers/UserHelper"
 import { User } from "../models/User"
+import jwt from "jsonwebtoken"
+import { UserNotFound } from "../errors/UserNotFound"
 
 export class UserService {
   constructor(private readonly userHelper: UserHelper) {}
@@ -19,11 +21,30 @@ export class UserService {
 
     const hash = await this.hashPassword(password)
 
-    // No pasamos id, dejamos que TypeORM lo genere
     const user = new User(name, email, hash)
 
     const newUser = await this.userHelper.create(user)
 
     return newUser
+  }
+
+  async login(email: string, password: string): Promise<string> {
+    const hashGeneratos = createHmac("sha512", "salt")
+    const hash = hashGeneratos.update(password).digest("hex")
+
+    const user = await this.userHelper.findByEmailAndPassword(email, hash)
+
+    if (!user) {
+      throw new UserNotFound(`An user with email ${email} was not found`)
+    }
+
+    const token = jwt.sign(
+      {
+        id: user.id,
+      },
+      process.env.JWT_SECRET!
+    )
+
+    return token
   }
 }

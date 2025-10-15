@@ -21,7 +21,6 @@ export default function RegisterPage() {
     confirmPassword: "",
   })
 
-  // Función para actualizar el estado cuando el usuario escribe
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({
       ...prev,
@@ -36,7 +35,7 @@ export default function RegisterPage() {
 
     try {
       const response = await HttpClient(
-        "http://localhost:5004/v1/cyclemaps/auth/register",
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
         "POST",
         JSON.stringify({
           email: formData.email,
@@ -49,8 +48,8 @@ export default function RegisterPage() {
       if (response.status === 201) {
         setSuccess(true)
         setFormData({
-          name: "",
           email: "",
+          name: "",
           password: "",
           confirmPassword: "",
         })
@@ -151,7 +150,7 @@ export default function RegisterPage() {
           </span>
 
           <p className="text-white text-[15px] md:text-[17px]">
-            <a href="#">Inicia sesión</a>
+            <a href="/login">Inicia sesión</a>
           </p>
         </div>
       </FormControl>
