@@ -42,6 +42,10 @@ export default function LoginPage() {
       )
 
       if (response.status === 200) {
+        const data = await response.json()
+
+        localStorage.setItem("token", data.token)
+
         setSuccess(true)
 
         setFormData({
