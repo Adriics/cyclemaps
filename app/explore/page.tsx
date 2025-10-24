@@ -22,28 +22,32 @@ export default function ExplorePage() {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Explora rutas</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {trails.map((trail) => (
-          <div key={trail.id} className="border p-4 rounded-lg">
-            <h2 className="text-xl font-bold">{trail.name}</h2>
-            <p className="text-gray-500">{trail.description}</p>
+      <main className="relative z-10">
+        <h1 className="text-2xl font-bold mb-4">Explora rutas</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {trails.map((trail) => (
+            <div key={trail.id} className="border p-4 rounded-lg">
+              <h2 className="text-xl font-bold">{trail.name}</h2>
+              <p className="text-gray-500">{trail.description}</p>
 
-            {trail.imageUrl && (
-              <img
-                src={trail.imageUrl}
-                alt={trail.name}
-                className="w-full h-64 object-cover mt-2 rounded-lg"
-              />
-            )}
+              {trail.imageUrl && (
+                <img
+                  src={trail.imageUrl}
+                  alt={trail.name}
+                  className="w-full h-64 object-cover mt-2 rounded-lg"
+                />
+              )}
 
-            <p className="font-bold text-lg">Distancia: {trail.distance} km</p>
-            <p className="font-bold text-lg">
-              Desnivel positivo: {trail.elevationGain} m
-            </p>
-          </div>
-        ))}
-      </div>
+              <p className="font-bold text-lg">
+                Distancia: {trail.distance} km
+              </p>
+              <p className="font-bold text-lg">
+                Desnivel positivo: {trail.elevationGain} m
+              </p>
+            </div>
+          ))}
+        </div>
+      </main>
     </div>
   )
 }

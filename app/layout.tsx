@@ -27,6 +27,13 @@ export default function RootLayout({
     <html lang="es">
       <Header />
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#233329] via-[#0a0a0a] to-[#0a0a0a] z-0"></div>
+        {/* Glowing orbs */}
+        <div className="absolute top-20 left-20 w-96 h-96 bg-[#63d471] rounded-full blur-[120px] opacity-20 animate-pulse z-0"></div>
+        <div
+          className="absolute bottom-20 right-20 w-96 h-96 bg-[#69fff1] rounded-full blur-[120px] opacity-15 animate-pulse z-0"
+          style={{ animationDelay: "1s" }}
+        ></div>
         {children}
       </body>
     </html>
