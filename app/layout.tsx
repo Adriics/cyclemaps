@@ -25,16 +25,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <Header />
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <div className="absolute inset-0 bg-gradient-to-br from-[#233329] via-[#0a0a0a] to-[#0a0a0a] z-0"></div>
-        {/* Glowing orbs */}
-        <div className="absolute top-20 left-20 w-96 h-96 bg-[#63d471] rounded-full blur-[120px] opacity-20 animate-pulse z-0"></div>
+        {/* Fondo con gradiente - FIXED y z-0 */}
+        <div className="fixed inset-0 bg-gradient-to-br from-[#233329] via-[#0a0a0a] to-[#0a0a0a] -z-10"></div>
+
+        {/* Glowing orbs - FIXED y z-0 */}
+        <div className="fixed top-20 left-20 w-96 h-96 bg-[#63d471] rounded-full blur-[120px] opacity-20 animate-pulse -z-10"></div>
         <div
-          className="absolute bottom-20 right-20 w-96 h-96 bg-[#69fff1] rounded-full blur-[120px] opacity-15 animate-pulse z-0"
+          className="fixed bottom-20 right-20 w-96 h-96 bg-[#69fff1] rounded-full blur-[120px] opacity-15 animate-pulse -z-10"
           style={{ animationDelay: "1s" }}
         ></div>
-        {children}
+
+        {/* Contenido principal */}
+        <Header />
+        <div className="relative z-10 text-white">{children}</div>
       </body>
     </html>
   )
