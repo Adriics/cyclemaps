@@ -7,7 +7,7 @@ interface RouteCardProps {
   elevationGain: number
   distance: number
   difficulty: string
-  authorId: string
+  authorName?: string
 }
 
 export function RouteCard({
@@ -17,7 +17,7 @@ export function RouteCard({
   elevationGain,
   distance,
   difficulty,
-  authorId,
+  authorName,
 }: RouteCardProps) {
   return (
     <div className="w-full grid grid-cols-2 h-full p-10 text-black">
@@ -31,7 +31,7 @@ export function RouteCard({
         <span>Desnivel: {elevationGain}</span>
         <span>Distancia: {distance}</span>
         <span>Dificultad: {difficulty}</span>
-        <span>Trailero de ruta: {authorId}</span>
+        <span>Trailero de ruta: {authorName}</span>
       </div>
     </div>
   )

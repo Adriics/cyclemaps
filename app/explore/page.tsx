@@ -15,6 +15,7 @@ export default function ExplorePage() {
         },
       })
       const data = await res.json()
+      console.log("Trails recibidos:", data.data) // ← Añade esto
       setTrails(data.data || [])
     }
 
@@ -28,13 +29,13 @@ export default function ExplorePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {trails.map((trail) => (
             <RouteCard
+              key={trail.id}
               title={trail.name}
-              authorId={trail.authorId}
+              authorName={trail.authorName}
               difficulty={trail.difficulty}
               distance={trail.distance}
               elevationGain={trail.elevationGain}
               imageUrl={trail.imageUrl}
-              key={trail.id}
             />
           ))}
         </div>

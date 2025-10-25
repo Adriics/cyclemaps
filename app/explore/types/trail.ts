@@ -7,4 +7,5 @@ export interface Trail {
   difficulty: string
   imageUrl: string
   authorId: string
+  authorName: string
 }
