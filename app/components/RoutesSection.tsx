@@ -1,5 +1,5 @@
 import { Trail } from "../explore/types/trail"
-import { RouteCard } from "./RouteCard"
+import { RouteCard } from "./TrailCard"
 
 interface RoutesSectionProps {
   trails: Trail[]

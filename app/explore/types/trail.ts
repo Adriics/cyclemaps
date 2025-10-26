@@ -8,4 +8,5 @@ export interface Trail {
   imageUrl: string
   authorId: string
   authorName: string
+  coordinates: [number, number][] // Backend ya te las envía
 }

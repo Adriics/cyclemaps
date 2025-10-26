@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react"
 import { Trail } from "./types/trail"
-import { RouteCard } from "../components/RouteCard"
+import "leaflet/dist/leaflet.css"
+import { TrailCard } from "../components/TrailCard"
 
 export default function ExplorePage() {
   const [trails, setTrails] = useState<Trail[]>([])
@@ -16,6 +17,11 @@ export default function ExplorePage() {
       })
       const data = await res.json()
       console.log("Trails recibidos:", data.data) // ← Añade esto
+      console.log("Trails recibidos:", data.data)
+      console.log(
+        "IDs de trails:",
+        data.data?.map((t: Trail) => t.id)
+      )
       setTrails(data.data || [])
     }
 
@@ -24,18 +30,20 @@ export default function ExplorePage() {
 
   return (
     <div className="p-6">
-      <main className="relative z-10">
-        <h1 className="text-2xl font-bold mb-4">Explora rutas</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <main className="pt-10 relative z-10">
+        <div className="flex flex-col justify-center items-center gap-4">
           {trails.map((trail) => (
-            <RouteCard
+            <TrailCard
+              id={trail.id}
               key={trail.id}
               title={trail.name}
+              description={trail.description}
               authorName={trail.authorName}
               difficulty={trail.difficulty}
               distance={trail.distance}
               elevationGain={trail.elevationGain}
               imageUrl={trail.imageUrl}
+              coordinates={trail.coordinates}
             />
           ))}
         </div>
