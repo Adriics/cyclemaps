@@ -7,6 +7,37 @@ import { TrailCard } from "../components/TrailCard"
 
 export default function ExplorePage() {
   const [trails, setTrails] = useState<Trail[]>([])
+  const [likedTrails, setLikedTrails] = useState<Set<string>>(new Set())
+
+  const handleLike = async (trailId: string) => {
+    console.log(`Trail with ID ${trailId} liked!`)
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/trails/${trailId}/like`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+          },
+        }
+      )
+      if (response.ok) {
+        setLikedTrails((prev) => {
+          const ns = new Set(prev)
+          ns.add(trailId)
+          return ns
+        })
+      }
+      if (!response.ok) {
+        const err = await response.text()
+        console.error("Failed to like trail:", response.status, err)
+      }
+    } catch (error) {
+      console.error("Error liking trail:", error)
+    }
+  }
 
   useEffect(() => {
     const fetchTrails = async () => {
@@ -16,7 +47,6 @@ export default function ExplorePage() {
         },
       })
       const data = await res.json()
-      console.log("Trails recibidos:", data.data) // ← Añade esto
       console.log("Trails recibidos:", data.data)
       console.log(
         "IDs de trails:",
@@ -44,6 +74,8 @@ export default function ExplorePage() {
               elevationGain={trail.elevationGain}
               imageUrl={trail.imageUrl}
               coordinates={trail.coordinates}
+              likes={trail.likeCount}
+              onLike={() => handleLike(trail.id)}
             />
           ))}
         </div>

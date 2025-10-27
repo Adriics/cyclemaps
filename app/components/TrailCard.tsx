@@ -2,6 +2,7 @@ import Image from "next/image"
 import { Button } from "./Button"
 import { generateGeoapifyStaticMap } from "../utils/geoapifyStaticMap"
 import { useRouter } from "next/navigation"
+import { LikeButton } from "./LikeButton"
 
 interface TrailCardProps {
   id: string
@@ -13,6 +14,8 @@ interface TrailCardProps {
   difficulty: string
   authorName?: string
   coordinates?: [number, number][]
+  likes?: number
+  onLike?: () => void
 }
 
 export function TrailCard({
@@ -25,6 +28,8 @@ export function TrailCard({
   difficulty,
   authorName,
   coordinates,
+  likes,
+  onLike,
 }: TrailCardProps) {
   const router = useRouter()
   const handleClick = () => {
@@ -46,7 +51,7 @@ export function TrailCard({
   return (
     <div
       className="w-240 justify-center items-center grid grid-cols-2 h-auto text-white bg-[#233329]/30 backdrop-blur-sm border border-[#63d471]/20 rounded-2xl p-6 
-         hover:border-[#63d471]/50 
+         hover:border-[#63d471]/50
         hover:bg-[#233329]/40
         hover:scale-[1.02] transition-all hover:shadow-lg hover:shadow-[#63d471]/10"
     >
@@ -74,6 +79,8 @@ export function TrailCard({
         <span>📍 Desnivel: {elevationGain} m</span>
         <span>👤 Creador: {authorName}</span>
         <span>⚡ Dificultad: {difficulty}</span>
+        <span>♥️ {likes}</span>
+        <LikeButton onClick={onLike} />
       </div>
     </div>
   )
