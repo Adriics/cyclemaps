@@ -34,6 +34,8 @@ export default function ExplorePage() {
           }
           return ns
         })
+
+        await fetchTrails()
       }
       if (!response.ok) {
         const err = await response.text()
@@ -43,23 +45,22 @@ export default function ExplorePage() {
       console.error("Error liking trail:", error)
     }
   }
+  const fetchTrails = async () => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trails`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      },
+    })
+    const data = await res.json()
+    console.log("Trails recibidos:", data.data)
+    console.log(
+      "IDs de trails:",
+      data.data?.map((t: Trail) => t.id)
+    )
+    setTrails(data.data || [])
+  }
 
   useEffect(() => {
-    const fetchTrails = async () => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trails`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
-        },
-      })
-      const data = await res.json()
-      console.log("Trails recibidos:", data.data)
-      console.log(
-        "IDs de trails:",
-        data.data?.map((t: Trail) => t.id)
-      )
-      setTrails(data.data || [])
-    }
-
     fetchTrails()
   }, [])
 
