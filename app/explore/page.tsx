@@ -26,7 +26,12 @@ export default function ExplorePage() {
       if (response.ok) {
         setLikedTrails((prev) => {
           const ns = new Set(prev)
-          ns.add(trailId)
+
+          if (ns.has(trailId)) {
+            ns.delete(trailId)
+          } else {
+            ns.add(trailId)
+          }
           return ns
         })
       }
