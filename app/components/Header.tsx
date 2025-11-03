@@ -11,8 +11,16 @@ export function Header() {
 
   const [visible, setVisible] = useState(false)
 
-  const handleClick = (path: string) => {
+  const handleClickRegister = (path: string) => {
     router.push(path)
+  }
+
+  const handleClickLogOut = () => {
+    localStorage.removeItem("token")
+  }
+
+  const handleClickProfile = () => {
+    router.push("/profile")
   }
 
   return (
@@ -20,13 +28,13 @@ export function Header() {
       <LogoCycleMaps />
       <ul
         className={`
-  ${visible ? "flex" : "hidden"}
-  md:flex
-  transition-all-duration-300
-   md:w-auto gap-x-20
-  flex-row md:flex-row 
-  gap-8 mt-0.5
-`}
+        ${visible ? "flex" : "hidden"}
+        md:flex
+        transition-all-duration-300
+        md:w-auto gap-x-20
+        flex-row md:flex-row 
+        gap-8 mt-0.5
+      `}
       >
         <li>
           <a href="/explore">Explora</a>
@@ -49,7 +57,12 @@ export function Header() {
         <Button
           classname=""
           text="Registrarse"
-          onClick={() => handleClick("/register")}
+          onClick={() => handleClickRegister("/register")}
+        />
+        <Button
+          classname=""
+          text="Cerrar sesión"
+          onClick={() => handleClickLogOut()}
         />
 
         <Image
@@ -57,6 +70,7 @@ export function Header() {
           src="/profile-icon.jpg"
           width={40}
           height={40}
+          onClick={handleClickProfile}
         />
       </div>
     </nav>
