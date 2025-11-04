@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { Button } from "./Button"
 
 interface LikeButtonProps {
@@ -5,5 +6,22 @@ interface LikeButtonProps {
 }
 
 export function LikeButton(props: LikeButtonProps) {
-  return <Button text="Me gusta ❤️" onClick={props.onClick} />
+  const [isAnimating, setIsAnimating] = useState(false)
+
+  const handleClick = () => {
+    setIsAnimating(true)
+    props.onClick?.()
+
+    setTimeout(() => {
+      setIsAnimating(false)
+    }, 200)
+  }
+
+  return (
+    <Button
+      classname={`w-16 transition-transform ${isAnimating ? "scale-110" : ""}`}
+      text="❤️"
+      onClick={handleClick}
+    />
+  )
 }
