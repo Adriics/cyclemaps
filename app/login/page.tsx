@@ -112,6 +112,8 @@ export default function LoginPage() {
             Me uno!
           </button>
 
+          {error && <span>{error}</span>}
+
           <span className="text-white">¿Ya estàs en la grupeta?</span>
 
           <p className="text-white">

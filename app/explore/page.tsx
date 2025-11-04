@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { Trail } from "./types/trail"
 import "leaflet/dist/leaflet.css"
 import { TrailCard } from "../components/TrailCard"
+import { fetchWithAuth } from "../utils/fetchWithAuth"
 
 export default function ExplorePage() {
   const [trails, setTrails] = useState<Trail[]>([])
@@ -13,14 +14,10 @@ export default function ExplorePage() {
     console.log(`Trail with ID ${trailId} liked!`)
 
     try {
-      const response = await fetch(
+      const response = await fetchWithAuth(
         `${process.env.NEXT_PUBLIC_API_URL}/trails/${trailId}/like`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
-          },
         }
       )
       if (response.ok) {

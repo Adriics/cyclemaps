@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { UserProfile } from "./types/user"
+import { fetchWithAuth } from "../utils/fetchWithAuth"
 
 export default function ProfilePage() {
   const [profile, setProfile] = useState<UserProfile | null>(null)
@@ -9,12 +10,10 @@ export default function ProfilePage() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await fetch(
+        const response = await fetchWithAuth(
           `${process.env.NEXT_PUBLIC_API_URL}/user/profile`,
           {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
-            },
+            method: "GET",
           }
         )
 

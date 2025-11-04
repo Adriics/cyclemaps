@@ -23,6 +23,7 @@ export function InputField(props: InputFieldProps) {
         placeholder={props.placeholder}
         value={props.value}
         onChange={props.onChange}
+        required
         className="rounded-md text-[15px] md:text-[17px] p-2 border border-white text-white bg-transparent"
       />
     </>

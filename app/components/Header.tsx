@@ -47,22 +47,28 @@ export function Header() {
         </li>
       </ul>
 
-      <div className="flex justify-between">
+      <div className="flex justify-between gap-10">
         <button
-          className="block md:hidden" // Solo visible en mobile
+          className="block md:hidden"
           onClick={() => setVisible(!visible)}
         >
           ☰
         </button>
+
         <Button
-          classname=""
-          text="Registrarse"
-          onClick={() => handleClickRegister("/register")}
+          classname="text-sm bg-transparent text-white"
+          text="Inicia sesión"
+          onClick={() => handleClickRegister("/login")}
         />
         <Button
-          classname=""
+          classname="text-sm bg-transparent text-white"
           text="Cerrar sesión"
           onClick={() => handleClickLogOut()}
+        />
+
+        <Button
+          text="Registrarse"
+          onClick={() => handleClickRegister("/register")}
         />
 
         <Image

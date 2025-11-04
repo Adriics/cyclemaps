@@ -3,6 +3,9 @@
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Button } from "../components/Button"
+import { useEffect, useState } from "react"
+import { fetchWithAuth } from "../utils/fetchWithAuth"
+import { UserProfile } from "../profile/types/user"
 
 export default function HomePage() {
   const router = useRouter()
@@ -10,6 +13,46 @@ export default function HomePage() {
   const handleClick = (path: string) => {
     router.push(path)
   }
+
+  const [profile, setProfile] = useState<UserProfile | null>(null)
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await fetchWithAuth(
+          `${process.env.NEXT_PUBLI_API_URL}/user/profile`
+        )
+
+        const data = await response.json()
+        console.log("Datos recibidos: ", data)
+
+        setProfile(data)
+      } catch (error) {
+        console.log("Error en /profile: ", error)
+      }
+    }
+    fetchProfile()
+  }, [])
+  const fetUsername = async () => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/user/profile`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+        },
+      }
+    )
+
+    const data = await response.json()
+    console.log(data)
+
+    setProfile(data || "")
+  }
+
+  useEffect(() => {
+    fetUsername()
+  }, [])
 
   return (
     <main className="grid grid-cols-1 justify-center items-center md:grid-cols-2 min-h-screen p-20 gap-10">
@@ -22,6 +65,7 @@ export default function HomePage() {
       ></div>
 
       <div className="w-100 flex flex-col justify-center items-center gap-6 relative z-10">
+        {profile && <span>Bienvenido/a {profile.name}!</span>}
         <div className="inline-block px-4 py-2 bg-[#63d471]/10 border border-[#63d471]/30 rounded-full">
           <span className="text-[#63d471] text-sm font-medium">
             ✨ Descubre el mundo sobre dos ruedas
