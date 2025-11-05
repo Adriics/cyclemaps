@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import { Header } from "./components/Header"
 import "leaflet/dist/leaflet.css"
+import ClientProvider from "./components/ClientProvider"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,7 +40,7 @@ export default function RootLayout({
 
         {/* Contenido principal */}
         <Header />
-        <div className="relative z-10 text-white">{children}</div>
+        <ClientProvider>{children}</ClientProvider>
       </body>
     </html>
   )

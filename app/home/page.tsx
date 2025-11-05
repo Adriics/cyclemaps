@@ -20,7 +20,7 @@ export default function HomePage() {
     const fetchProfile = async () => {
       try {
         const response = await fetchWithAuth(
-          `${process.env.NEXT_PUBLI_API_URL}/user/profile`
+          `${process.env.NEXT_PUBLIC_API_URL}/user/profile`
         )
 
         const data = await response.json()

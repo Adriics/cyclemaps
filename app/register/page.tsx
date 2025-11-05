@@ -6,6 +6,7 @@ import { InputField } from "../components/InputField"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { HttpClient } from "../libs/HttpClient"
+import SignInButton from "../components/SignInButton"
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -144,6 +145,11 @@ export default function RegisterPage() {
           >
             {isLoading ? "Cargando..." : "Me uno!"}
           </button>
+
+          <div className="text-white text-center">
+            <p>o</p>
+            <SignInButton />
+          </div>
 
           <span className="text-white text-[15px] md:text-[17px]">
             ¿Ya estás en la grupeta?
