@@ -31,6 +31,7 @@ export const HttpClient = async (
       method,
       headers,
       body,
+      credentials: "include",
     })
 
     console.log(`HttpClient: Respuesta recibida, status: ${response.status}`)

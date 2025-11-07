@@ -4,49 +4,45 @@ import GoogleProvider from "next-auth/providers/google"
 const handler = NextAuth({
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile }) {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/auth/google`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              name: user.name,
-              email: user.email,
-              picture: user.image,
-            }),
-          }
-        )
+    async jwt({ token, account, profile }) {
+      // Si es el primer login, añadimos info de Google
+      if (account && profile) {
+        token.googleAccessToken = account.access_token
 
-        const data = await res.json()
+        try {
+          // 🔥 Llamada a tu backend
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/auth/google`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                name: profile.name,
+                email: profile.email,
+                picture: profile.image,
+              }),
+            }
+          )
 
-        if (!res.ok) {
-          console.error("Error creando usuario en backend:", data)
-          return false
+          const data = await response.json()
+
+          // Guarda el token que devuelve tu backend (si quieres usarlo después)
+          token.backendToken = data.data // o data.token según tu respuesta
+        } catch (err) {
+          console.error("Error al sincronizar usuario Google:", err)
         }
-
-        if (typeof window !== "undefined") {
-          localStorage.setItem("token", data.data)
-        }
-
-        return true
-      } catch (error) {
-        console.error("Error en signIn callback:", error)
-        return false
       }
+
+      return token
     },
-
     async session({ session, token }) {
-      if (session.user) {
-        session.user.name = token.name || null
-        session.user.email = token.email || null
-      }
+      session.googleAccessToken = token.googleAccessToken as string | undefined
+      session.backendToken = token.backendToken as string | undefined
       return session
     },
   },

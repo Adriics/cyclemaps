@@ -1,39 +1,37 @@
 "use client"
-
-import { useEffect, useState } from "react"
-import { UserProfile } from "./types/user"
-import { fetchWithAuth } from "../utils/fetchWithAuth"
+import { useSession, signOut } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 export default function ProfilePage() {
-  const [profile, setProfile] = useState<UserProfile | null>(null)
+  const { data: session, status } = useSession()
+  const router = useRouter()
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await fetchWithAuth(
-          `${process.env.NEXT_PUBLIC_API_URL}/user/profile`,
-          {
-            method: "GET",
-          }
-        )
+  if (status === "loading")
+    return <p className="text-white p-20">Cargando...</p>
+  if (status === "unauthenticated") {
+    router.push("/login")
+    return null
+  }
 
-        const data = await response.json()
-        console.log("Datos recibidos: ", data)
+  const user = session?.user
 
-        setProfile(data)
-      } catch (error) {
-        console.log("Error en /profile: ", error)
-      }
-    }
-    fetchProfile()
-  }, [])
   return (
     <div className="bg-transparent min-h-screen p-20 text-white text-xl">
-      <p>Nombre: {profile?.name}</p>
-      <p>Email: {profile?.email}</p>
-      <p>Distancia total: {profile?.stats.totalDistance} km</p>
-      <p>Me han gustado {profile?.stats.trailsLiked} rutas</p>
-      <p>Elevación total: {profile?.stats.totalElevation} m</p>
+      <h1 className="text-3xl mb-4">Perfil</h1>
+      <img
+        src={user?.image || ""}
+        alt="Foto"
+        className="rounded-full w-24 h-24 mb-4"
+      />
+      <p>Nombre: {user?.name}</p>
+      <p>Email: {user?.email}</p>
+
+      <button
+        onClick={() => signOut({ callbackUrl: "/login" })}
+        className="mt-6 bg-red-600 hover:bg-red-700 px-6 py-2 rounded-xl"
+      >
+        Cerrar sesión
+      </button>
     </div>
   )
 }

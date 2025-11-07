@@ -28,19 +28,21 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {/* Fondo con gradiente - FIXED y z-0 */}
+        {/* Fondo con gradiente */}
         <div className="fixed inset-0 bg-gradient-to-br from-[#233329] via-[#0a0a0a] to-[#0a0a0a] -z-10"></div>
 
-        {/* Glowing orbs - FIXED y z-0 */}
+        {/* Glowing orbs */}
         <div className="fixed top-20 left-20 w-96 h-96 bg-[#63d471] rounded-full blur-[120px] opacity-20 animate-pulse -z-10"></div>
         <div
           className="fixed bottom-20 right-20 w-96 h-96 bg-[#69fff1] rounded-full blur-[120px] opacity-15 animate-pulse -z-10"
           style={{ animationDelay: "1s" }}
         ></div>
 
-        {/* Contenido principal */}
-        <Header />
-        <ClientProvider>{children}</ClientProvider>
+        {/* SessionProvider envuelve TODO */}
+        <ClientProvider>
+          <Header />
+          {children}
+        </ClientProvider>
       </body>
     </html>
   )

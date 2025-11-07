@@ -1,16 +1,21 @@
 "use client"
-import { signIn } from "next-auth/react"
-import { FaGoogle } from "react-icons/fa"
 
-function SignInButton() {
+import { signIn, useSession } from "next-auth/react"
+import { useEffect } from "react"
+
+export default function SignInButton() {
+  const { data: session } = useSession()
+
+  useEffect(() => {
+    console.log("SESSION DESDE SIGNINBUTTON:", session)
+  }, [session])
+
   return (
     <button
-      onClick={() => signIn("google", { prompt: "select_account" })}
-      className="flex items-center justify-center px-4 py-2 rounded border-gray-900 border hover:bg-blue-100"
+      onClick={() => signIn("google")}
+      className="cursor-pointer bg-blue-500 text-white p-2 rounded"
     >
-      <FaGoogle className="mr-2" />
-      Sign in with Google
+      Iniciar sesión con Google
     </button>
   )
 }
-export default SignInButton
