@@ -10,12 +10,10 @@ const handler = NextAuth({
   ],
   callbacks: {
     async jwt({ token, account, profile }) {
-      // Si es el primer login, añadimos info de Google
       if (account && profile) {
         token.googleAccessToken = account.access_token
 
         try {
-          // 🔥 Llamada a tu backend
           const response = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/auth/google`,
             {
@@ -29,10 +27,12 @@ const handler = NextAuth({
             }
           )
 
-          const data = await response.json()
-
-          // Guarda el token que devuelve tu backend (si quieres usarlo después)
-          token.backendToken = data.data // o data.token según tu respuesta
+          if (!response.ok) {
+            console.error("Error al autenticar: ", response.status)
+          } else {
+            const data = await response.json()
+            token.backendToken = data.data
+          }
         } catch (err) {
           console.error("Error al sincronizar usuario Google:", err)
         }

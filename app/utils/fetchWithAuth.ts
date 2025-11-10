@@ -9,7 +9,6 @@ export async function fetchWithAuth(url: string, options: RequestInit = {}) {
     Authorization: `Bearer ${token || ""}`,
   }
 
-  // Si hay body y no hay Content-Type, asumimos JSON
   if (
     options.body &&
     !(headers instanceof Headers) &&
