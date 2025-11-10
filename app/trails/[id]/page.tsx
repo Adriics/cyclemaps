@@ -17,25 +17,25 @@ export default function TrailDetailPage() {
   useEffect(() => {
     const fetchTrail = async () => {
       try {
-        console.log("ID del trail:", params.id) // ← Debug
+        console.log("ID del trail:", params.id)
         console.log(
           "URL completa:",
           `${process.env.NEXT_PUBLIC_API_URL}/trails/${params.id}`
-        ) // ← Debug
+        )
 
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/trails/${params.id}`
         )
 
-        console.log("Response status:", response.status) // ← Debug
+        console.log("Response status:", response.status)
 
         if (!response.ok) {
           const errorData = await response.text()
-          console.error("Error response:", errorData) // ← Debug
+          console.error("Error response:", errorData)
           throw new Error("Ruta no encontrada")
         }
         const data = await response.json()
-        console.log("Trail recibido:", data) // ← Debug
+        console.log("Trail recibido:", data)
 
         setTrail(data)
       } catch (error) {

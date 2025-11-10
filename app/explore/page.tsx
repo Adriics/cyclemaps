@@ -64,7 +64,7 @@ export default function ExplorePage() {
   return (
     <div className="p-6">
       <main className="pt-10 relative z-10">
-        <div className="flex flex-col justify-center items-center gap-4">
+        <div className="flex flex-col justify-center items-center gap-4 gap-y-20 p-16 lg:grid">
           {trails.map((trail) => (
             <TrailCard
               id={trail.id}

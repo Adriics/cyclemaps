@@ -19,7 +19,9 @@ export function LikeButton(props: LikeButtonProps) {
 
   return (
     <Button
-      classname={`w-16 transition-transform ${isAnimating ? "scale-110" : ""}`}
+      classname={`w-16 transition-transform ${
+        isAnimating ? "scale-110" : ""
+      } md:w-25 md:h-12 text-2xl`}
       text="❤️"
       onClick={handleClick}
     />

@@ -11,14 +11,6 @@ export function Header() {
 
   const [visible, setVisible] = useState(false)
 
-  const handleClickRegister = (path: string) => {
-    router.push(path)
-  }
-
-  const handleClickLogOut = () => {
-    localStorage.removeItem("token")
-  }
-
   const handleClickProfile = () => {
     router.push("/profile")
   }
@@ -36,13 +28,13 @@ export function Header() {
         gap-8 mt-0.5
       `}
       >
-        <li>
+        <li className="hover:scale-110 hover:text-[var(--primary)] transition-all">
           <a href="/explore">Explora</a>
         </li>
-        <li>
+        <li className="hover:scale-110 hover:text-[var(--primary)] transition-all">
           <a href="/planify">Planifica tu ruta</a>
         </li>
-        <li>
+        <li className="hover:scale-110 hover:text-[var(--primary)] transition-all">
           <a href="/upload">Sube tu ruta</a>
         </li>
       </ul>
@@ -54,22 +46,6 @@ export function Header() {
         >
           ☰
         </button>
-
-        <Button
-          classname="text-sm bg-transparent text-white"
-          text="Inicia sesión"
-          onClick={() => handleClickRegister("/login")}
-        />
-        <Button
-          classname="text-sm bg-transparent text-white"
-          text="Cerrar sesión"
-          onClick={() => handleClickLogOut()}
-        />
-
-        <Button
-          text="Registrarse"
-          onClick={() => handleClickRegister("/register")}
-        />
 
         <Image
           alt="Profile photo"

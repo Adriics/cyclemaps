@@ -36,15 +36,19 @@ export default function FormUpload() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-10">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+      <label htmlFor="trailName">Nombre de la ruta</label>
       <input
+        name="trailName"
         type="text"
-        placeholder="Nombre de la ruta"
+        placeholder="Ejemplo: Senderos por Andorra"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
+      <label htmlFor="descriptionTrail">Descripción</label>
       <textarea
-        placeholder="Descripción"
+        name="descriptionTrail"
+        placeholder="Ruta pasando por los pirineos..."
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
