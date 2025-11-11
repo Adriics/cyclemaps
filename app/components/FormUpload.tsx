@@ -40,6 +40,7 @@ export default function FormUpload() {
       <label htmlFor="trailName">Nombre de la ruta</label>
       <input
         name="trailName"
+        id="trailName"
         type="text"
         placeholder="Ejemplo: Senderos por Andorra"
         value={name}
@@ -48,6 +49,7 @@ export default function FormUpload() {
       <label htmlFor="descriptionTrail">Descripción</label>
       <textarea
         name="descriptionTrail"
+        id="descriptionTrail"
         placeholder="Ruta pasando por los pirineos..."
         value={description}
         onChange={(e) => setDescription(e.target.value)}
