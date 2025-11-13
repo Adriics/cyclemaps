@@ -136,19 +136,11 @@ export default function TrailDetailPage() {
 
         <div className="flex gap-4 flex-wrap">
           <Button
-            text="Iniciar navegación"
-            onClick={() => {
-              console.log("Iniciar navegación")
-            }}
-            classname="bg-[var(--primary)] flex-1 md:flex-none"
-          />
-
-          <Button
             text="Descargar GPX"
             onClick={() => {
               console.log("Descargar GPX")
             }}
-            classname="bg-transparent border border-[#63d471] hover:bg-[#63d471]/10 flex-1 md:flex-none"
+            classname="bg-[var(--primary)] border border-[#63d471] hover:bg-[#63d471]/10 flex-1 md:flex-none"
           />
 
           <Button
@@ -157,7 +149,7 @@ export default function TrailDetailPage() {
               navigator.clipboard.writeText(window.location.href)
               alert("Link copiado al portapapeles")
             }}
-            classname="bg-transparent border border-[#63d471] hover:bg-[#63d471]/10 flex-1 md:flex-none"
+            classname="bg-[var(--primary)] border border-[#63d471] hover:bg-[#63d471]/10 flex-1 md:flex-none"
           />
         </div>
       </div>

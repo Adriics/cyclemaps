@@ -12,4 +12,5 @@ export interface UserProfile {
   }
   createdTrails: Trail[]
   likedTrails: Trail[]
+  picture: string
 }

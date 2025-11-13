@@ -4,59 +4,53 @@ import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Button } from "../components/Button"
 import { useEffect, useState } from "react"
-import { fetchWithAuth } from "../utils/fetchWithAuth"
+import { useSession } from "next-auth/react"
 import { UserProfile } from "../profile/types/user"
 
 export default function HomePage() {
   const router = useRouter()
+  const { data: session, status } = useSession()
+  const [profile, setProfile] = useState<UserProfile | null>(null)
+
+  useEffect(() => {
+    if (!session?.backendToken) return // Espera a que el token esté listo
+
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/v1/users/me`,
+          {
+            headers: {
+              Authorization: `Bearer ${session.backendToken}`,
+            },
+          }
+        )
+
+        if (!response.ok) {
+          console.error("Error al obtener perfil:", response.status)
+          setProfile(null)
+          return
+        }
+
+        const data: UserProfile = await response.json()
+        setProfile(data)
+      } catch (err) {
+        console.error("Error en fetch de perfil:", err)
+        setProfile(null)
+      }
+    }
+
+    fetchProfile()
+  }, [session?.backendToken])
 
   const handleClick = (path: string) => {
     router.push(path)
   }
 
-  const [profile, setProfile] = useState<UserProfile | null>(null)
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await fetchWithAuth(
-          `${process.env.NEXT_PUBLIC_API_URL}/user/profile`
-        )
-
-        const data = await response.json()
-        console.log("Datos recibidos: ", data)
-
-        setProfile(data)
-      } catch (error) {
-        console.log("Error en /profile: ", error)
-      }
-    }
-    fetchProfile()
-  }, [])
-  const fetUsername = async () => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/user/profile`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
-        },
-      }
-    )
-
-    const data = await response.json()
-    console.log(data)
-
-    setProfile(data || "")
-  }
-
-  useEffect(() => {
-    fetUsername()
-  }, [])
-
   return (
     <main className="grid grid-cols-1 justify-center items-center md:grid-cols-2 min-h-screen p-20 gap-10">
       <div className="absolute inset-0 bg-gradient-to-br from-[#233329] via-[#0a0a0a] to-[#0a0a0a] z-0"></div>
+
       {/* Glowing orbs */}
       <div className="absolute top-20 left-20 w-96 h-96 bg-[#63d471] rounded-full blur-[120px] opacity-20 animate-pulse z-0"></div>
       <div
