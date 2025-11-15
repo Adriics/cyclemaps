@@ -15,7 +15,7 @@ const handler = NextAuth({
 
         try {
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/auth/google`,
+            `${process.env.NEXT_PUBLIC_API_URL}/v1/cyclemaps/auth/google`,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
