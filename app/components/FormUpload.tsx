@@ -29,8 +29,9 @@ export default function FormUpload() {
     await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/cyclemaps/trails`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${session.data?.backendToken || ""}`,
+        Authorization: `Bearer ${session.data?.backendToken ?? ""}`,
       },
+      credentials: "include",
       body: formData,
     })
   }
