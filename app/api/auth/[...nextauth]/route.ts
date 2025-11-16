@@ -10,7 +10,6 @@ const handler = NextAuth({
   ],
   callbacks: {
     async jwt({ token, account, profile }) {
-      // Si viene de login Google
       if (account && profile) {
         token.googleAccessToken = account.access_token
 
