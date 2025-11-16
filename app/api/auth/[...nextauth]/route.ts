@@ -10,6 +10,7 @@ const handler = NextAuth({
   ],
   callbacks: {
     async jwt({ token, account, profile }) {
+      // Si viene de login Google
       if (account && profile) {
         token.googleAccessToken = account.access_token
 
@@ -19,7 +20,6 @@ const handler = NextAuth({
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              credentials: "include",
               body: JSON.stringify({
                 name: profile.name,
                 email: profile.email,
@@ -28,10 +28,9 @@ const handler = NextAuth({
             }
           )
 
-          if (!response.ok) {
-            console.error("Error al autenticar: ", response.status)
-          } else {
-            const data = await response.json()
+          const data = await response.json()
+
+          if (data.ok && data.data) {
             token.backendToken = data.data
           }
         } catch (err) {
@@ -39,8 +38,19 @@ const handler = NextAuth({
         }
       }
 
+      // IMPORTANTE: Mantenerlo entre refrescos
+      if (!token.backendToken) {
+        const stored =
+          typeof window !== "undefined"
+            ? localStorage.getItem("backend_token")
+            : null
+
+        if (stored) token.backendToken = stored
+      }
+
       return token
     },
+
     async session({ session, token }) {
       session.googleAccessToken = token.googleAccessToken as string | undefined
       session.backendToken = token.backendToken as string | undefined

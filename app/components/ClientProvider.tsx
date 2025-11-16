@@ -1,14 +1,31 @@
 "use client"
-import { SessionProvider } from "next-auth/react"
-import { ReactNode } from "react"
-// Define a type for the component's props
+
+import { SessionProvider, useSession } from "next-auth/react"
+import { ReactNode, useEffect } from "react"
+
 interface Props {
   children: ReactNode
 }
+
+function SyncBackendToken() {
+  const { data: session } = useSession()
+
+  useEffect(() => {
+    if (session?.backendToken) {
+      localStorage.setItem("backend_token", session.backendToken)
+    }
+  }, [session])
+
+  return null
+}
+
 const ClientProvider = ({ children }: Props) => {
   return (
-    // Wrap the children with the SessionProvider to manage session state
-    <SessionProvider>{children}</SessionProvider>
+    <SessionProvider>
+      <SyncBackendToken />
+      {children}
+    </SessionProvider>
   )
 }
+
 export default ClientProvider
