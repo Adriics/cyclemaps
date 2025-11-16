@@ -14,6 +14,11 @@ const handler = NextAuth({
         token.googleAccessToken = account.access_token
 
         try {
+          console.log(
+            "🔵 Intentando fetch a:",
+            `${process.env.NEXT_PUBLIC_API_URL}/v1/cyclemaps/auth/google`
+          )
+
           const response = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/v1/cyclemaps/auth/google`,
             {
@@ -27,24 +32,19 @@ const handler = NextAuth({
             }
           )
 
+          console.log("🔵 Response status:", response.status)
           const data = await response.json()
+          console.log("🔵 Response data:", data)
 
           if (data.ok && data.data) {
             token.backendToken = data.data
+            console.log("✅ Token guardado:", token.backendToken)
+          } else {
+            console.error("❌ No se recibió token:", data)
           }
         } catch (err) {
-          console.error("Error al sincronizar usuario Google:", err)
+          console.error("❌ Error en fetch:", err)
         }
-      }
-
-      // IMPORTANTE: Mantenerlo entre refrescos
-      if (!token.backendToken) {
-        const stored =
-          typeof window !== "undefined"
-            ? localStorage.getItem("backend_token")
-            : null
-
-        if (stored) token.backendToken = stored
       }
 
       return token
