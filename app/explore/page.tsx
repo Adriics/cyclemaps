@@ -43,11 +43,14 @@ export default function ExplorePage() {
     }
   }
   const fetchTrails = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trails`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
-      },
-    })
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/v1/cyclemaps/trails`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+        },
+      }
+    )
     const data = await res.json()
     console.log("Trails recibidos:", data.data)
     console.log(
