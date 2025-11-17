@@ -20,11 +20,11 @@ export default function TrailDetailPage() {
         console.log("ID del trail:", params.id)
         console.log(
           "URL completa:",
-          `${process.env.NEXT_PUBLIC_API_URL}/trails/${params.id}`
+          `${process.env.NEXT_PUBLIC_API_URL}/v1/cyclemaps/trails/${params.id}`
         )
 
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/trails/${params.id}`
+          `${process.env.NEXT_PUBLIC_API_URL}/v1/cyclemaps/trails/${params.id}`
         )
 
         console.log("Response status:", response.status)

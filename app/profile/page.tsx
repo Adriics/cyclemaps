@@ -14,7 +14,7 @@ export default function ProfilePage() {
       const fetchUser = async () => {
         try {
           const res = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/v1/users/me`,
+            `${process.env.NEXT_PUBLIC_API_URL}/v1/cyclemaps/v1/users/me`,
             {
               headers: { Authorization: `Bearer ${session.backendToken}` },
             }
