@@ -37,7 +37,7 @@ export default function TrailDetailPage() {
         const data = await response.json()
         console.log("Trail recibido:", data)
 
-        setTrail(data)
+        setTrail(data.data)
       } catch (error) {
         console.error("Error al cargar la ruta:", error)
       } finally {
