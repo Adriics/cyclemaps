@@ -15,7 +15,7 @@ export default function ExplorePage() {
 
     try {
       const response = await fetchWithAuth(
-        `${process.env.NEXT_PUBLIC_API_URL}/trails/${trailId}/like`,
+        `${process.env.NEXT_PUBLIC_API_URL}/v1/cyclemaps/trails/${trailId}/like`,
         {
           method: "POST",
         }
