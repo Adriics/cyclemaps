@@ -83,18 +83,22 @@ export default function TrailDetailPage() {
 
   console.log("Coordenadas:", trail.coordinates?.length)
   console.log("Map URL:", mapUrl)
+
+
+
+
   return (
-    <div className="w-full bg-gradient-to-b from-[#0a0f0d] to-[#1a2520] p-8">
+    <div className="w-full p-20 bg-gradient-to-b from-[#0a0f0d] to-[#1a2520] p-8">
       <div className="mx-auto">
-        <div className="mb-8">
+        <div className="mb-8 m-4 flex justify-start float-right">
           <Button
             text="← Volver"
             onClick={() => router.back()}
-            classname="bg-transparent border border-[#63d471]/30 hover:border-[#63d471]"
+            classname="bg-[var(--primary)] border border-[#63d471]/30 hover:border-[#63d471]"
           />
         </div>
 
-        <div className="mb-8">
+        <div className="mb-8 flex flex-col gap-y-4 m-4">
           <h1 className="text-5xl font-bold text-white mb-4">{trail.name}</h1>
           <p className="text-xl text-gray-300 mb-2">{trail.description}</p>
           <p className="text-[#63d471]">Creado por {trail.authorName}</p>
