@@ -30,7 +30,7 @@ export function Header() {
         <li className="hover:scale-110 hover:text-[var(--primary)] transition-all">
           <a href="/explore">Explora</a>
         </li>
-        <li className="hover:scale-110 hover:text-[var(--primary)] transition-all">
+        <li className="hover:scale-110 hover:text-[var(--primary)] transition-all hidden">
           <a href="/planify">Planifica tu ruta</a>
         </li>
         <li className="hover:scale-110 hover:text-[var(--primary)] transition-all">
