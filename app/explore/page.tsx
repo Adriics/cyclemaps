@@ -42,6 +42,7 @@ export default function ExplorePage() {
       console.error("Error liking trail:", error)
     }
   }
+  
   const fetchTrails = async () => {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/v1/cyclemaps/trails`,
@@ -51,12 +52,19 @@ export default function ExplorePage() {
         },
       }
     )
+  
     const data = await res.json()
+  
     console.log("Trails recibidos:", data.data)
     console.log(
       "IDs de trails:",
       data.data?.map((t: Trail) => t.id)
     )
+  
+    data.data?.forEach((t: Trail, i: number) => {
+      console.log(`👉 Trail #${i} (${t.id}) imageUrl:`, t.imageUrl)
+    })
+  
     setTrails(data.data || [])
   }
 
