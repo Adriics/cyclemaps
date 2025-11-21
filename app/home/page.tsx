@@ -48,7 +48,7 @@ export default function HomePage() {
   }
 
   return (
-    <main className="w-full h-full grid grid-cols-1 justify-center items-center md:grid-cols-2 min-h-screen p-20 gap-10">
+    <main className="w-full h-full grid grid-cols-1 justify-center items-center md:grid-cols-2 min-h-screen p-6 md:p-20 gap-10">
       <div className="absolute inset-0 bg-gradient-to-br from-[#233329] via-[#0a0a0a] to-[#0a0a0a] z-0"></div>
 
       {/* Glowing orbs */}
@@ -58,14 +58,14 @@ export default function HomePage() {
         style={{ animationDelay: "1s" }}
       ></div>
 
-      <div className="w-100 flex flex-col justify-center items-center gap-6 relative z-10">
+      <div className="w-full flex flex-col justify-center items-center gap-6 relative z-10">
         {profile && <span>Bienvenido/a {profile.name}!</span>}
         <div className="inline-block px-4 py-2 bg-[#63d471]/10 border border-[#63d471]/30 rounded-full">
           <span className="text-[#63d471] text-sm font-medium">
             ✨ Descubre el mundo sobre dos ruedas
           </span>
         </div>
-        <h1 className="text-6xl font-bold">
+        <h1 className="text-4xl md:text-6xl font-bold">
           Destinos{" "}
           <span className="block bg-gradient-to-r from-[#63d471] to-[#69fff1] bg-clip-text text-transparent">
             inolvidables
@@ -89,7 +89,7 @@ export default function HomePage() {
           alt="Maps image"
           width={2300}
           height={50}
-          className="rounded-3xl"
+          className="rounded-3xl w-full h-auto"
         />
       </div>
     </main>
