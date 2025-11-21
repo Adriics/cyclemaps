@@ -48,7 +48,7 @@ export default function HomePage() {
   }
 
   return (
-    <main className="w-full h-full grid grid-cols-1 justify-center items-center md:grid-cols-2 min-h-screen p-6 md:p-20 gap-10">
+    <main className="w-full h-full grid grid-cols-1 justify-center items-center md:grid-cols-2 min-h-screen p-6 md:p-20 gap-10 relative">
       <div className="absolute inset-0 bg-gradient-to-br from-[#233329] via-[#0a0a0a] to-[#0a0a0a] z-0"></div>
 
       {/* Glowing orbs */}
