@@ -37,7 +37,6 @@ export default function ExplorePage() {
   }
 
   const fetchTrails = async () => {
-    // ✅ usamos backend_token en lugar de "token"
     const token = localStorage.getItem("backend_token")
 
     if (!token) {
